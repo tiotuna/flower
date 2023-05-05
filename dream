@@ -1,0 +1,30 @@
+  apt-get update
+    echo '[*] Installing Debian Dependencies'
+    apt-get install -y cmake python3 xvfb python3-pip python3-netaddr python3-dev firefox-esr
+    echo
+    echo '[*] Installing Python Modules'
+    apt install -y python3-selenium python3-fuzzywuzzy python3-pyvirtualdisplay  python3-netaddr python3-levenshtein
+    echo
+    cd ../bin/
+    MACHINE_TYPE=`uname -m`
+    if [ ${MACHINE_TYPE} == 'x86_64' ]; then
+      wget ${geckodriver_x86_64}
+      tar -xvf geckodriver-v0.32.0-linux64.tar.gz
+      rm geckodriver-v0.32.0-linux64.tar.gz
+      mv geckodriver /usr/sbin
+      if [ -e /usr/bin/geckodriver ]
+      then
+        rm /usr/bin/geckodriver
+      fi
+      ln -s /usr/sbin/geckodriver /usr/bin/geckodriver
+    else
+      wget ${geckodriver_x86_32}
+      tar -xvf geckodriver-v0.32.0-linux32.tar.gz
+      rm geckodriver-v0.32.0-linux32.tar.gz
+      mv geckodriver /usr/sbin
+      if [ -e /usr/bin/geckodriver ]
+      then
+        rm /usr/bin/geckodriver
+      fi
+      ln -s /usr/sbin/geckodriver /usr/bin/geckodriver
+    fi
